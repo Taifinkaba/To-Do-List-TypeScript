@@ -35,4 +35,10 @@ export default class ListItem implements Item {
     set checked(checked: boolean) {
         this._checked = checked
     }
+
+     // New method to edit the item
+     editItem(newText: string): void {
+        this._item = newText
+    }
+    
 }

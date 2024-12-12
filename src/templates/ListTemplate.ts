@@ -42,14 +42,30 @@ export default class ListTemplate implements DOMList {
             label.textContent = item.item
             li.append(label)
 
-            const button = document.createElement("button") as HTMLButtonElement
-            button.className = 'button'
-            button.textContent = 'X'
-            li.append(button)
+            // Add Remove button
+            const removeButton = document.createElement("button") as HTMLButtonElement
+            removeButton.className = 'button'
+            removeButton.textContent = 'X'
+            li.append(removeButton)
 
-            button.addEventListener('click', () => {
+            removeButton.addEventListener('click', () => {
                 fullList.removeItem(item.id)
                 this.render(fullList)
+            })
+
+            // Add Edit button
+            const editButton = document.createElement("button") as HTMLButtonElement
+            editButton.className = 'button'
+            editButton.textContent = 'Edit'
+            li.append(editButton)
+
+            editButton.addEventListener('click', () => {
+                const newText = prompt('Edit your item:', item.item)
+                if (newText !== null && newText.trim() !== '') {
+                    item.editItem(newText)
+                    fullList.save()
+                    this.render(fullList)  // Re-render the list to show updated text
+                }
             })
 
             this.ul.append(li)
